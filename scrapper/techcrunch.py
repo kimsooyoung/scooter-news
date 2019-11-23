@@ -1,34 +1,46 @@
 from bs4 import BeautifulSoup
 import requests
 
+import datetime
+
 URL = 'https://techcrunch.com/tag/electric-scooters/'
 
-page_html = requests.get( URL )
-soup = BeautifulSoup(page_html.text, 'html.parser')
-page_data = soup.find_all( 'div', { 'class': 'post-block' } )
+def get_article_html():
+    page_html = requests.get( URL )
+    soup = BeautifulSoup(page_html.text, 'html.parser')
+    page_data = soup.find_all( 'div', { 'class': 'post-block' } )
+    return page_data
 
-for article in page_data:
-    title = article.find('a', { 'class': 'post-block__title__link'})
-    title = str(title.string.strip())
+def extract_data(page_data):
+    articles = []
+    for article in page_data:
+        title = article.find('a', { 'class': 'post-block__title__link'})
+        title = str(title.string.strip())
 
-    description = article.find('div', { 'class': 'post-block__content' })
-    description = str(description.string.strip())
+        description = article.find('div', { 'class': 'post-block__content' })
+        description = str(description.string.strip())
 
-    time = article.find('div', { 'class': 'river-byline' }).find('time')
-    time = str(time.string.strip())
+        time = article.find('div', { 'class': 'river-byline' }).find('time')
+        time = str(time.string.strip())
 
-    image = article.find('img')
-    image_url = str(image['src'])
+        image = article.find('img')
+        image_url = str(image['src'])
 
-    url = article.find('a', { 'class': 'post-block__title__link' })
-    url = str(url['href'])
+        url = article.find('a', { 'class': 'post-block__title__link' })
+        url = str(url['href'])
 
-    article_obj = { 
-        'title': title, 
-        'description': description,
-        'time': time,
-        'image': image_url,
-        'url': url
-    }
-    print(article_obj)
-    break
+        article_obj = { 
+            'title': title, 
+            'description': description,
+            'published': time,
+            'image': image_url,
+            'url': url,
+            'scrappedAt': datetime.datetime.now() - datetime.timedelta(hours=9),
+        }
+        articles.append(article_obj)
+    return articles
+
+def get_article_data():
+    article_html_list = get_article_html()
+    output = extract_data(article_html_list)
+    return output
