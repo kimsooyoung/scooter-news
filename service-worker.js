@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/scooter-news/precache-manifest.efd02c17c796f0dc015bfc3aa8847369.js"
+  "/scooter-news/precache-manifest.1268b1c66c1813f589a055cd66b324b2.js"
 );
 
 self.addEventListener('message', (event) => {
