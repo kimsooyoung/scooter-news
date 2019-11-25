@@ -20,7 +20,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    let id = setInterval(getMovies, 1000);
+    let id = setInterval(getMovies, 100000);
     return () => clearInterval(id);
   }, [loading]);
 
