@@ -12,9 +12,7 @@ const App = () => {
     // setLoading(true);
     const {
       data: { data }
-    } = await axios.get(
-      `http://ec2-13-124-177-139.ap-northeast-2.compute.amazonaws.com:3001/scooter-news/${media}`
-    );
+    } = await axios.get(`http://localhost:3001/scooter-news/${media}`);
     console.log(data);
     setLoading(false);
     setArticles(data);

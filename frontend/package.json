@@ -33,5 +33,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://kimsooyoung.github.io/scooter-news"
+  "homepage": "https://kimsooyoung.github.io/scooter-news",
+  "proxy": "http://localhost:3001"
 }
