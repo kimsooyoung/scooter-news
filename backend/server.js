@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(logger("dev"));
 
 const today = moment().format("YYYY-MM-DD");
-const from = moment(today).subtract(9, "hours");
+const from = moment(today).subtract(1, "hours");
 const to = moment(today).add(15, "hours");
 
 // this is our get method

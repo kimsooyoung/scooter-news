@@ -30,7 +30,7 @@ def extract_data(page_data):
             'published': time,
             'image': image_url,
             'url': url,
-            'scrappedAt': datetime.datetime.now() - datetime.timedelta(hours=9),
+            'scrappedAt': datetime.datetime.now(),
         }
         articles.append(article_obj)
     return articles

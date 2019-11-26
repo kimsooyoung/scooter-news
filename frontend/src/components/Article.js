@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./Article.css";
 
-const TheVerge = ({ title, url, published, image_url }) => {
+const Article = ({ title, url, published, image_url, media }) => {
   return (
     <div className="article">
       <a href={url}>
@@ -17,4 +18,4 @@ const TheVerge = ({ title, url, published, image_url }) => {
   );
 };
 
-export default TheVerge;
+export default Article;

@@ -1,28 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import TheVerge from "./components/TheVerge";
+import Article from "./components/Article";
 import "./App.css";
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [media, setMedia] = useState("techcrunch");
   const [articles, setArticles] = useState([]);
-  // const [interval, ToggleInterval] = useState(false);
 
-  const getMovies = async () => {
+  const getMovies = useCallback(async () => {
+    // setLoading(true);
     const {
       data: { data }
     } = await axios.get(
-      "http://ec2-13-124-177-139.ap-northeast-2.compute.amazonaws.com:3001/scooter-news/techcrunch"
+      `http://ec2-13-124-177-139.ap-northeast-2.compute.amazonaws.com:3001/scooter-news/${media}`
     );
     console.log(data);
     setLoading(false);
     setArticles(data);
-  };
+  }, [media, loading]);
 
   useEffect(() => {
-    let id = setInterval(getMovies, 100000);
-    return () => clearInterval(id);
-  }, [loading]);
+    // let id = setInterval(getMovies, 100000);
+    // return () => clearInterval(id);
+    getMovies();
+  }, [loading, media]);
+
+  const onClick = media => {
+    setMedia(media);
+  };
 
   return (
     <div className="App">
@@ -41,27 +47,35 @@ const App = () => {
                 <li>
                   <img
                     className="bi__logo"
+                    onClick={() => onClick("businessinsider")}
                     src="https://www.hi-interiors.com/wp-content/uploads/2019/08/kisspng-business-insider-logo-news-entrepreneurship-sangeet-5b3731a2d298e8.2945856615303438428626.png"
                   ></img>
                 </li>
                 <li>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/The_Verge_logo.svg/1280px-The_Verge_logo.svg.png"></img>
+                  <img
+                    onClick={() => onClick("theverge")}
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/The_Verge_logo.svg/1280px-The_Verge_logo.svg.png"
+                  ></img>
                 </li>
                 <li>
-                  <img src="http://v3.danielmall.com/articles/techcrunch-responsive-redesign/tc-logo5.svg"></img>
+                  <img
+                    onClick={() => onClick("techcrunch")}
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/TechCrunch_logo.svg/1200px-TechCrunch_logo.svg.png"
+                  ></img>
                 </li>
               </ul>
             </nav>
           </header>
           <div className="articles">
             {articles.map(article => (
-              <TheVerge
+              <Article
                 key={article._id}
+                media={media}
                 title={article.title}
                 published={article.published}
                 url={article.url}
                 image_url={article.image}
-              ></TheVerge>
+              ></Article>
             ))}
           </div>
         </div>

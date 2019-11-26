@@ -59,6 +59,16 @@ li a:hover {
   display: flex;
   align-items: center;
   flex-direction: column;
+  /* justify-content: center; */
+}
+
+.header-container {
+  /* position: absolute; */
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #f2f2f2;
+  padding: 2.3em 0;
+  align-items: center;
 }
 
 .loader {
